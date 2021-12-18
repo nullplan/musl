@@ -6,8 +6,7 @@ double asin(double x)
         GET_HIGH_WORD(ix, x);
 	if (ix + ix < 0x00200000)    /* subnormal x, return x with underflow */
 	{
-		// XXX: Verify x + 0 adds underflow for subnormal nonzero x
-		FORCE_EVAL(x + 0.0);
+		FORCE_EVAL(x * x);
 		return x;
 	}
 	long double radicand = (1.0L - x) * (1.0L + x);
