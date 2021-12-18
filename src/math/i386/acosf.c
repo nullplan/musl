@@ -3,9 +3,7 @@
 /* use acos(x) = atan2(fabs(sqrt((1-x)*(1+x))), x) */
 float acosf(float x)
 {
-	long double one;
-	__asm__("fld1" : "=t"(one));
-	long double radicand = (one - x) * (one + x);
+	long double radicand = (1.0L - x) * (1.0L + x);
 	long double numerator;
 	/* fabs to fix sign of zero (matters in downward rounding mode) */
 	__asm__("fsqrt; fabs" : "=t"(numerator) : "0"(radicand));
