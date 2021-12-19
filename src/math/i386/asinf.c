@@ -4,7 +4,7 @@ float asinf(float x)
 {
 	uint32_t ix;
 	GET_FLOAT_WORD(ix, x);
-	if (ix+ix < 0x01000000)
+	if (unlikely((ix & 0x7fffffff) < 0x00800000))
 	{
 		FORCE_EVAL(x * x);
 		return x;

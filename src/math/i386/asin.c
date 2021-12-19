@@ -4,9 +4,10 @@ double asin(double x)
 {
 	uint32_t ix;
         GET_HIGH_WORD(ix, x);
-	if (ix + ix < 0x00200000)    /* subnormal x, return x with underflow */
+	if (unlikely((ix & 0x7fffffff) < 0x00100000))    /* subnormal x, return x with underflow */
 	{
-		FORCE_EVAL(x * x);
+		volatile float f;
+		__asm__("fsts %0" : "=m"(f) : "t"(x));
 		return x;
 	}
 	long double radicand = (1.0L - x) * (1.0L + x);
