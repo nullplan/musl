@@ -46,5 +46,3 @@ long double exp2l(long double x)
 	__asm__("f2xm1" : "=t"(x) : "0"(x - r));
 	return (x + 1) * u.f;
 }
-
-hidden long double __exp2l(long double x) __attribute__((alias("exp2l")));

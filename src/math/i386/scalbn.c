@@ -21,5 +21,5 @@ double scalbn(double x, int e)
 	union ldshape mult;
 	mult.i.se = e + 0x3fff;
 	mult.i.m = (1ull << 63);
-	return x * mult.f;
+	return (double)(x * mult.f);
 }

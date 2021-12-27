@@ -7,8 +7,6 @@
  * using the exact multiplication method of Dekker and Veltkamp
  */
 
-extern hidden long double __exp2l(long double);
-
 long double expl(long double x)
 {
 	union ldshape u = {x};
@@ -27,7 +25,7 @@ long double expl(long double x)
 	__asm__("fldl2e" : "=t"(l2e));
 
 	long double hi = l2e * x;
-	long double two_raised_hi = __exp2l(hi);
+	long double two_raised_hi = exp2l(hi);
 
 	/* if 2^hi == inf return 2^hi */
 	u.f = two_raised_hi;

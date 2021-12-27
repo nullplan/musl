@@ -23,7 +23,7 @@ float remquof(float a, float b, int *quo)
 	uint32_t ia, ib;
 	GET_FLOAT_WORD(ia, a);
 	GET_FLOAT_WORD(ib, b);
-	return remquo_core(a, b, quo, (ia ^ ib) >> 31);
+	return (float)remquo_core(a, b, quo, (ia ^ ib) >> 31);
 }
 
 double remquo(double a, double b, int *quo)
@@ -31,7 +31,7 @@ double remquo(double a, double b, int *quo)
 	uint32_t ia, ib;
 	GET_HIGH_WORD(ia, a);
 	GET_HIGH_WORD(ib, b);
-	return remquo_core(a, b, quo, (ia ^ ib) >> 31);
+	return (double)remquo_core(a, b, quo, (ia ^ ib) >> 31);
 }
 
 long double remquol(long double a, long double b, int *quo)

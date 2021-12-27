@@ -5,7 +5,7 @@ double hypot(double x, double y)
 	uint32_t hx, lx, hy, ly;
 	EXTRACT_WORDS(hx, lx, x);
 	EXTRACT_WORDS(hy, ly, y);
-	if (likely((hx & hy & 0x7ff00000) != 0x7ff00000)) {
+	if (predict_true((hx & hy & 0x7ff00000) != 0x7ff00000)) {
 		/* x == 0 -> return |y| */
 		if (2 * hx + lx == 0) {
 			__asm__("fabs" : "+t"(y));
@@ -17,8 +17,9 @@ double hypot(double x, double y)
 			return x;
 		}
 		/* Else go the long way around. */
-		__asm__("fsqrt" : "=t"(x) : "0"(x * x + y * y));
-		return x;
+                long double res;
+		__asm__("fsqrt" : "=t"(res) : "0"(x * x + y * y));
+		return (double)res;
 	}
 
 	/* both inputs are inf or nan */

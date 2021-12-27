@@ -19,6 +19,6 @@ float scalbnf(float x, int e)
 	}
 	double mult;
 	INSERT_WORDS(mult, (e + 0x3ff) << 20, 0);
-	return x * mult;
+	return (float)(x * mult);
 }
 
