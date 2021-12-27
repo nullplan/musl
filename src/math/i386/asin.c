@@ -1,4 +1,5 @@
 #include "libm.h"
+#include "coreimpl.h"
 
 double asin(double x)
 {
@@ -9,10 +10,5 @@ double asin(double x)
 		volatile float f = x;
 		return x;
 	}
-	long double radicand = (1.0L - x) * (1.0L + x);
-	long double denominator;
-	long double res;
-	__asm__("fsqrt" : "=t"(denominator) : "0"(radicand));
-	__asm__("fpatan" : "=t"(res) : "0"(denominator), "u"(x) : "st(1)");
-	return (double)res;
+	return (double)asin_core(x);
 }

@@ -1,5 +1,4 @@
 #include "libm.h"
-#include "features.h"
 
 /* exp(x) = 2^hi + 2^hi (2^lo - 1)
  * where hi+lo = log2e*x with 128bit precision

@@ -1,4 +1,5 @@
 #include "libm.h"
+#include "coreimpl.h"
 
 float hypotf(float x, float y)
 {
@@ -14,9 +15,7 @@ float hypotf(float x, float y)
 			__asm__("fabs" : "+t"(x));
 			return x;
 		}
-		long double res;
-		__asm__("fsqrt" : "=t"(res) : "0"(y * y + x * x));
-		return (float)res;
+		return (float)hypot_core(x, y);
 	}
 
 	if (!(ix & 0x007fffff)) {

@@ -1,15 +1,5 @@
 #include "libm.h"
 
-float ldexpf(float x, int e)
-{
-	return scalbnf(x, e);
-}
-
-float scalblnf(float x, long e)
-{
-	return scalbnf(x, e);
-}
-
 float scalbnf(float x, int e)
 {
 	if (e + 0x3feu >= 0x7fd)

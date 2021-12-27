@@ -1,4 +1,5 @@
 #include "libm.h"
+#include "coreimpl.h"
 
 double hypot(double x, double y)
 {
@@ -16,10 +17,8 @@ double hypot(double x, double y)
 			__asm__("fabs" : "+t"(x));
 			return x;
 		}
-		/* Else go the long way around. */
-		long double res;
-		__asm__("fsqrt" : "=t"(res) : "0"(x * x + y * y));
-		return (double)res;
+
+		return (double)hypot_core(x, y);
 	}
 
 	/* both inputs are inf or nan */

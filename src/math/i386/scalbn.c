@@ -1,15 +1,5 @@
 #include "libm.h"
 
-double ldexp(double x, int e)
-{
-	return scalbn(x, e);
-}
-
-double scalbln(double x, long int e)
-{
-	return scalbn(x, e);
-}
-
 double scalbn(double x, int e)
 {
 	if (e + 0x3ffeu >= 0x7ffd)
