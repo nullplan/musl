@@ -14,7 +14,7 @@ float hypotf(float x, float y)
 			__asm__("fabs" : "+t"(x));
 			return x;
 		}
-                long double res;
+		long double res;
 		__asm__("fsqrt" : "=t"(res) : "0"(y * y + x * x));
 		return (float)res;
 	}

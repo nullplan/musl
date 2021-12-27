@@ -3,7 +3,7 @@
 double log1p(double x)
 {
 	long double ln2;
-        long double res;
+	long double res;
 	uint32_t ix;
 	GET_HIGH_WORD(ix, x);
 	ix &= 0x7fffffff;

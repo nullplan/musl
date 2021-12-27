@@ -3,7 +3,7 @@
 float atanf(float x)
 {
 	uint32_t ix;
-        long double res;
+	long double res;
 	GET_FLOAT_WORD(ix, x);
 	if ((ix & 0x7fffffff) < 0x00800000)
 	{

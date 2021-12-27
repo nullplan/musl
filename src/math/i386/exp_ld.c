@@ -8,8 +8,8 @@ long double expm1l(long double x)
 	x *= l2e;
 	if (x < -65)
 		return -1;
-        long double absx;
-        __asm__("fabs" : "=t"(absx) : "0"(x));
+	long double absx;
+	__asm__("fabs" : "=t"(absx) : "0"(x));
 	if (absx <= 1) {
 		__asm__("f2xm1" : "=t"(x) : "0"(x));
 		return x;

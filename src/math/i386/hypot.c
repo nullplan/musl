@@ -17,7 +17,7 @@ double hypot(double x, double y)
 			return x;
 		}
 		/* Else go the long way around. */
-                long double res;
+		long double res;
 		__asm__("fsqrt" : "=t"(res) : "0"(x * x + y * y));
 		return (double)res;
 	}

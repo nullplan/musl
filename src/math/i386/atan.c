@@ -3,7 +3,7 @@
 double atan(double x)
 {
 	uint32_t ix;
-        long double res;
+	long double res;
 	GET_HIGH_WORD(ix, x);
 	ix &= 0x7fffffff;
 	if (unlikely(ix < 0x00100000))

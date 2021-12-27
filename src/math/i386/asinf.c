@@ -11,7 +11,7 @@ float asinf(float x)
 	}
 	long double radicand = (1.0L - x) * (1.0L + x);
 	long double denom;
-        long double res;
+	long double res;
 	__asm__("fsqrt" : "=t"(denom) : "0"(radicand));
 	__asm__("fpatan" : "=t"(res) : "0"(denom), "u"(x) : "st(1)");
 	return (float)res;
