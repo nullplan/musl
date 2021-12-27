@@ -3,37 +3,64 @@
 
 #include <stdint.h>
 
-/* use acos(x) = atan2(fabs(sqrt((1-x)*(1+x))), x) */
-static inline long double acos_core(long double x)
+static inline long double x87_fsqrt(long double x)
 {
-	long double radicand = (1.0L - x) * (1.0L + x);
-	long double numerator;
-	/* fabs to fix sign of zero (matters in downward rounding mode) */
-	__asm__("fsqrt; fabs" : "=t"(numerator) : "0"(radicand));
-	__asm__("fpatan" : "=t"(x) : "0"(x), "u"(numerator) : "st(1)");
+	__asm__("fsqrt" : "+t"(x));
 	return x;
 }
 
-/* use asin(x) = atan2(x, sqrt((1-x)*(1+x))) */
+static inline long double x87_fabs(long double x)
+{
+	__asm__("fabs" : "+t"(x));
+	return x;
+}
+
+static inline long double x87_fpatan(long double y, long double x)
+{
+	__asm__("fpatan" : "=t"(x) : "0"(y), "u"(x) : "st(1)");
+	return x;
+}
+
+static inline long double x87_fyl2x(long double x, long double y)
+{
+	__asm__("fyl2x" : "=t"(x) : "0"(x), "u"(y) : "st(1)");
+	return x;
+}
+
+static inline long double x87_ln2(void)
+{
+	long double ln2;
+	__asm__("fldln2" : "=t"(ln2));
+	return ln2;
+}
+
+static inline long double x87_lg2(void)
+{
+	long double lg2;
+	__asm__("fldlg2" : "=t"(lg2));
+	return lg2;
+}
+
+static inline long double acos_core(long double x)
+{
+	long double radicand = (1.0L - x) * (1.0L + x);
+	return x87_fpatan(x, x87_fabs(x87_fsqrt(radicand)));
+}
+
 static inline long double asin_core(long double x)
 {
 	long double radicand = (1.0L - x) * (1.0L + x);
-	long double denominator;
-	__asm__("fsqrt" : "=t"(denominator) : "0"(radicand));
-	__asm__("fpatan" : "=t"(x) : "0"(denominator), "u"(x) : "st(1)");
-	return x;
+	return x87_fpatan(x87_fsqrt(radicand), x);
 }
 
 static inline long double atan_core(long double x)
 {
-	__asm__("fpatan" : "=t"(x) : "0"(1.0L), "u"(x) : "st(1)");
-	return x;
+	return x87_fpatan(1.0, x);
 }
 
 static inline long double atan2_core(long double y, long double x)
 {
-	__asm__("fpatan" : "=t"(x) : "0"(y), "u"(x) : "st(1)");
-	return x;
+	return x87_fpatan(y, x);
 }
 
 /* the core of ceil, floor, and trunc */
@@ -50,30 +77,22 @@ static inline long double rndint(long double x, uint16_t rm)
 
 static inline long double hypot_core(long double x, long double y)
 {
-	__asm__("fsqrt" : "=t"(x) : "0"(x*x + y*y));
-	return x;
+	return x87_fsqrt(x*x + y*y);
 }
 
 static inline long double log2_core(long double x)
 {
-	__asm__("fyl2x" : "=t"(x) : "0"(x), "u"(1.0) : "st(1)");
-	return x;
+	return x87_fyl2x(x, 1.0);
 }
 
 static inline long double log_core(long double x)
 {
-	long double ln2;
-	__asm__("fldln2" : "=t"(ln2));
-	__asm__("fyl2x" : "=t"(x) : "0"(x), "u"(ln2) : "st(1)");
-	return x;
+	return x87_fyl2x(x, x87_ln2());
 }
 
 static inline long double log10_core(long double x)
 {
-	long double lg2;
-	__asm__("fldlg2" : "=t"(lg2));
-	__asm__("fyl2x" : "=t"(x) : "0"(x), "u"(lg2) : "st(1)");
-	return x;
+	return x87_fyl2x(x, x87_lg2());
 }
 
 static inline long lrint_core(long double x)
