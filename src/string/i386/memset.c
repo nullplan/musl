@@ -30,7 +30,7 @@ void *memset(void * const dst, int c, size_t len)
 			cdst += (-(uintptr_t)dst) & 15;
 		}
 		len >>= 2;
-		__asm__("rep; movsl" : "+c"(len), "+D"(cdst) :: "memory");
+		__asm__("rep; stosl" : "+c"(len), "+D"(cdst) :: "memory");
 	}
 	return dst;
 }
