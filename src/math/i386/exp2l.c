@@ -6,10 +6,9 @@ long double exp2l(long double x)
 	uint32_t r;
 	u.i.se &= 0x7fff;
 	if (u.i.se >= 0x3fff + 13 && u.i.se < 0x3fff + 15) {
-		if (x <= -16382 && x - 0x1p63 + 0x1p63 != x) {
-			volatile float f = 0x1p-149; // raise underflow
-			(void)f;
-		}
+		if (x <= -16382 && x - 0x1p63 + 0x1p63 != x)
+			FORCE_EVAL((float)(0x1p-149/x)); // raise underflow
+
 		long double rint;
 		long double mant;
 		__asm__("frndint" : "=t"(rint) : "0"(x));

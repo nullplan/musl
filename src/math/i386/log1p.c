@@ -15,8 +15,7 @@ double log1p(double x)
 	}
 	if (predict_false(ix < 0x00100000)) {
 		/* subnormal x, return x with underflow */
-		volatile float f = x;
-		(void)f;
+		FORCE_EVAL((float)x);
 		return x;
 	}
 

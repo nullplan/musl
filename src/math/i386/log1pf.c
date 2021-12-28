@@ -16,8 +16,7 @@ float log1pf(float x)
 	if (predict_false(ix < 0x00800000))
 	{
 		/* subnormal x, return x with underflow */
-		volatile float f;
-		__asm__("fmul %%st(1)" : "=t"(f) : "0"(ln2), "u"(x));   /* that was like this in the original. Why is it different from the other places? */
+		FORCE_EVAL(x*x);
 		return x;
 	}
 
