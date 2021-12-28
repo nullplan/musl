@@ -41,6 +41,13 @@ static inline long double x87_lg2(void)
 	return lg2;
 }
 
+static inline long double x87_l2e(void)
+{
+	long double l2e;
+	__asm__("fldl2e" : "=t"(l2e));
+	return l2e;
+}
+
 static inline long double acos_core(long double x)
 {
 	long double radicand = (1.0L - x) * (1.0L + x);
