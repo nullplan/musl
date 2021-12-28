@@ -8,12 +8,12 @@ double hypot(double x, double y)
 	EXTRACT_WORDS(hy, ly, y);
 	if (predict_true((hx & hy & 0x7ff00000) != 0x7ff00000)) {
 		/* x == 0 -> return |y| */
-		if (2 * hx + lx == 0) {
+		if (((hx << 1) | lx) == 0) {
 			__asm__("fabs" : "+t"(y));
 			return y;
 		}
 		/* y == 0 -> return |x| */
-		if (2 * hy + ly == 0) {
+		if (((hy << 1) | ly) == 0) {
 			__asm__("fabs" : "+t"(x));
 			return x;
 		}
