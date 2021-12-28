@@ -13,7 +13,7 @@ float log1pf(float x)
 		__asm__("fyl2x" : "=t"(res) : "0"(x + 1), "u"(ln2) : "st(1)");
 		return (float)res;
 	}
-	if (unlikely(ix < 0x00800000))
+	if (predict_false(ix < 0x00800000))
 	{
 		/* subnormal x, return x with underflow */
 		volatile float f;

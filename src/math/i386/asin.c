@@ -8,6 +8,7 @@ double asin(double x)
 	if (predict_false((ix & 0x7fffffff) < 0x00100000))    /* subnormal x, return x with underflow */
 	{
 		volatile float f = x;
+		(void)f;
 		return x;
 	}
 	return (double)asin_core(x);
