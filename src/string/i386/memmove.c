@@ -10,6 +10,6 @@ void *memmove(void *dst, const void *src, size_t len)
 	/* else we need to do the backward copy */
 	dst = (char*)dst + len - 1;
 	src = (const char*)src + len - 1;
-	__asm__("std; rep; movsb; cld" : "+c"(len), "+D"(dst), "+S"(src) :: "memory");
+	__asm__ volatile ("std; rep; movsb; cld" : "+c"(len), "+D"(dst), "+S"(src) :: "memory");
 	return (char*)dst + 1;
 }
