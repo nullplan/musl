@@ -5,7 +5,7 @@
 int __set_thread_area(void *p)
 {
 	static int idx = -1;
-	uint32_t buf[4] = {idx, (uint32_t)p, 0x51, 0xfffff};
+	uint32_t buf[4] = {idx, (uint32_t)p, 0xfffff, 0x51};
 	int rv = __syscall(SYS_set_thread_area, buf);
 	int gsval;
 	if (!rv) {
