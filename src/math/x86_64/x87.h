@@ -62,9 +62,22 @@ static inline long double x87_lg2(void)
 	return r;
 }
 
+static inline long double x87_ln2(void)
+{
+	long double r;
+	__asm__("fldln2" : "=t"(r));
+	return r;
+}
+
 static inline long double x87_fyl2x(long double x, long double y)
 {
 	__asm__("fyl2x" : "=t"(x) : "0"(x), "u"(y) : "st(1)");
+	return x;
+}
+
+static inline long double x87_fyl2xp1(long double x, long double y)
+{
+	__asm__("fyl2xp1" : "=t"(x) : "0"(x), "u"(y) : "st(1)");
 	return x;
 }
 #endif
