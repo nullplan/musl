@@ -13,9 +13,9 @@ static inline long double x87_fsqrt(long double x)
 	return x;
 }
 
-static inline long double x87_fpatan(long double y, long double x)
+static inline long double x87_fpatan(long double x, long double y)
 {
-	__asm__("fpatan" : "=t"(x) : "0"(y), "u"(x) : "st(1)");
+	__asm__("fpatan" : "=t"(x) : "0"(x), "u"(y) : "st(1)");
 	return x;
 }
 #endif
